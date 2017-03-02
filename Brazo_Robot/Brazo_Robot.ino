@@ -1,14 +1,22 @@
+/* Copyright (C) 2017 Iván Rodríguez Méndez
+This software is distributed under the GNU General Public
+Licence (version 3 or later); please refer to the file
+Licence.txt, included with the software, for details.
+*/
+
+// Control por serial del brazo robot
+
 // Proyecto Brazo Robot
 
-#include <Servo.h> 
- 
+#include <Servo.h>
+
 Servo myservo;  // creamos los objetos de los diferentes servos.
 Servo myservo_2;
 Servo myservo_3;
 Servo myservo_4;
 Servo myservo_5;
- 
-int pos_myservo = 90;    // Definimos las posiciones iniciales del robot 
+
+int pos_myservo = 90;    // Definimos las posiciones iniciales del robot
 int pos_myservo_2 = 120;
 int pos_myservo_3 = 90;
 int pos_myservo_4 = 30;
@@ -47,51 +55,51 @@ int print_mov_servo = 0;
 int num_servo = 0;
 int mov_ter = 0;
 
- 
-void setup() 
-{ 
-  
+
+void setup()
+{
+
   Serial.begin(9600); //Iniciamos la comunicacion serial
-  
+
   // Definicion del servo de la base
-  myservo.attach(9,500,2500);  // attaches the servo on pin 9 to the servo object 
+  myservo.attach(9,500,2500);  // attaches the servo on pin 9 to the servo object
   myservo.write(pos_myservo); //Lo giramos a su posicion inicial
-  
-  myservo_2.attach(10,500,2500);  
+
+  myservo_2.attach(10,500,2500);
   myservo_2.write(pos_myservo_2);
   delay(200);
-  
-  myservo_3.attach(8,500,2500);  
+
+  myservo_3.attach(8,500,2500);
   myservo_3.write(pos_myservo_3);
   delay(200);
-  
-  myservo_4.attach(7,500,2500);  
+
+  myservo_4.attach(7,500,2500);
   myservo_4.write(pos_myservo_4);
   delay(200);
-  
-  myservo_5.attach(6,500,2500);  
+
+  myservo_5.attach(6,500,2500);
   myservo_5.write(pos_myservo_5);
-  
-  
+
+
 
   delay(1000);
-  
-  
-} 
- 
- 
-void loop() { 
+
+
+}
+
+
+void loop() {
   // Apertura y cierre de la pinza
   if (print_sel_servo == 0){
     Serial.println("Introduce el numero del servo que quieres controlar");
     print_sel_servo = 1;
   }
-  
+
   if(Serial.available() > 0) {
      num_servo = Serial.parseInt();
-     
+
      switch (num_servo) {
-       
+
        case 1:
        Serial.println("Servo de la base seleccionado:");
        while (mov_ter == 0){
@@ -114,9 +122,9 @@ void loop() {
             }
           }
         }
-       
+
          break;
-         
+
         case 2:
         Serial.println("Segundo servo seleccionado:");
         while (mov_ter == 0){
@@ -140,9 +148,9 @@ void loop() {
           }
         }
           break;
-          
+
          case 3:
-         
+
          Serial.println("Tercer servo seleccionado:");
          while (mov_ter == 0){
          if (print_mov_servo == 0){
@@ -165,9 +173,9 @@ void loop() {
           }
         }
         break;
-        
+
         case 4:
-        
+
          Serial.println("Cabeceo de la pinza seleccionado:");
          while (mov_ter == 0){
          if (print_mov_servo == 0){
@@ -189,11 +197,11 @@ void loop() {
             }
           }
         }
-        
+
         break;
-        
+
         case 5:
-        
+
          Serial.println("Apertura de la pinza seleccionado:");
          while (mov_ter == 0){
          if (print_mov_servo == 0){
@@ -215,31 +223,25 @@ void loop() {
             }
           }
         }
-        
-        
-        
+
+
+
         break;
-        
-        
-         
+
+
+
        default:
-       
+
        Serial.println("El servo seleccionado no existe!!");
 
-       
+
        break;
-       
+
      }
-       
-      
+
+
    }
    delay(500);
    print_mov_servo = 0;
    mov_ter = 0;
 }
-  
-
-    
-
-  
-  
